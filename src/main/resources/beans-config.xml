@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here-->
+    <bean id="emp" class="xmlconfig.beanlife.Emp" init-method="init" destroy-method="destroy"/>
+
+    <!-- Setter Injection -->
+     <bean id="employee" class="xmlconfig.Injection.setter.Employee">
+         <property name="id" value="1"/>
+         <property name="name" value="sai"/>
+         <property name="sal" value="100.45"/>
+         <!-- Now we have to add Address object field -->
+         <property name="address" ref="address"/>
+     </bean>
+
+    <bean id="address" class="xmlconfig.Injection.setter.Address">
+        <property name="dno" value="26-13-218"/>
+        <property name="city" value="nellore"/>
+        <property name="state" value="AndhraPradesh"/>
+    </bean>
+
+    <!-- Constructor Injection -->
+    <bean id="book" class="xmlconfig.Injection.constructor.Book">
+        <constructor-arg index="0" value="100"/>
+        <constructor-arg index="1" value="Spring"/>
+        <constructor-arg index="2" value="Mr.Saikumar"/>
+        <constructor-arg index="3" ref="publisher"/>
+    </bean>
+
+    <bean id="publisher" class="xmlconfig.Injection.constructor.Publisher">
+        <constructor-arg index="0" value="Balaji"/>
+        <constructor-arg index="1" value="Hyderabad"/>
+    </bean>
+
+
+    <!-- CollectionData Injection -->
+    <bean id="collection" class="xmlconfig.Injection.collectionData.CollectionData">
+        <property name="names">
+            <list>
+                <value>sai</value>
+                <value>skr</value>
+                <value>rsk</value>
+                <value>rsr</value>
+            </list>
+        </property>
+
+        <property name="pinCode">
+            <set>
+                <value>524004</value>
+                <value>524001</value>
+                <value>524002</value>
+                <value>524003</value>
+            </set>
+        </property>
+
+        <property name="wordCount">
+            <map>
+                <entry key="sai" value="3"/>
+                <entry key="kumar" value="5"/>
+                <entry key="reddy" value="1"/>
+            </map>
+        </property>
+
+        <property name="properties">
+            <props>
+                <prop key="username">system</prop>
+                <prop key="password">manager</prop>
+            </props>
+        </property>
+
+        <property name="bookData">
+            <list>
+                <ref bean="book1"/>
+                <ref bean="book2"/>
+                <ref bean="book3"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="book1" class="xmlconfig.Injection.collectionData.BookData">
+        <property name="id" value="100"/>
+        <property name="name" value="CoreJava"/>
+        <property name="author" value="Sai"/>
+    </bean>
+
+    <bean id="book2" class="xmlconfig.Injection.collectionData.BookData">
+        <property name="id" value="101"/>
+        <property name="name" value="Spring"/>
+        <property name="author" value="kumar"/>
+    </bean>
+
+    <bean id="book3" class="xmlconfig.Injection.collectionData.BookData">
+        <property name="id" value="102"/>
+        <property name="name" value="SpringBoot"/>
+        <property name="author" value="Reddy"/>
+    </bean>
+
+   <!-- <bean id="india" class="com.beanFactory.IndianNames"/> -->
+    <!-- <bean id="usa" class="com.beanFactory.USANames"/> -->
+
+    <bean id="factory" class="xmlconfig.beanFactory.FactoryBean"/>
+
+    <bean id="india" factory-bean="factory" factory-method="getIndianNames"/>
+    <bean id="usa" factory-bean="factory" factory-method="getUSANames"/>
+
+    <bean id="mainNamesData" class="xmlconfig.beanFactory.MainNamesData">
+        <property name="namesData" ref="usa"/>
+    </bean>
+
+ </beans>
